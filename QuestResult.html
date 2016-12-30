@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		 <script type="text/javascript">
+      WebFontConfig = {
+        custom: {
+					families: ['Hanna'],
+					urls: ['http://fonts.googleapis.com/earlyaccess/hanna.css']},
+		      active: function() { init();}
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
+
+    <title>Your New Quest </title>
+
+	</head>
+	<body>
+		 <canvas width="500" height="650" id="canvas"></canvas>
+<script type="text/javascript">
+
+var imagesLoaded = 0;
+var img1,img2,img3;
+
+function init(){
+
+	 img1 = loadImage('Images/QuestBackground_01.png', main);
+	 img2 = loadImage('Images/item1.png', main);
+	 img3 = loadImage('Images/item2.png', main);
+
+}
+
+function main(){
+
+    imagesLoaded += 1;
+
+    if(imagesLoaded == 3)
+  	{
+
+  		var canvas = document.getElementById("canvas");
+  		var ctx = canvas.getContext("2d");
+
+
+  		ctx.drawImage(img1, 1, 1,500,650);
+
+  		ctx.font="40px Hanna";
+  		ctx.fillText("어서일해라!", 150, 60);
+
+  		ctx.font="28px Hanna";
+  		ctx.fillText("형광등 갈기!", 110, 110);
+
+
+  		ctx.font="30px Hanna";
+  		ctx.fillText("퀘스트 보상", 80, 450);
+
+  		ctx.drawImage(img2, 80, 460 ,50,50);
+  		ctx.font="23px Hanna";
+  		ctx.fillText("후줄근한 바지(추위내성 +10)", 140, 495);
+
+  		ctx.drawImage(img3, 80, 518 ,50,50);
+  		ctx.font="23px Hanna";
+  		ctx.fillText("김빠진 맥주(추위내성 +40)", 140, 550);
+
+    }
+}
+
+function loadImage(src, onload) {
+
+    var img = new Image();
+
+    img.onload = onload;
+    img.src = src;
+
+    return img;
+}
+
+
+ </script>
+	</body>
+</html>
