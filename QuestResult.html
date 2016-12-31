@@ -28,6 +28,25 @@
 
 var imagesLoaded = 0;
 var img1,img2,img3;
+var Q_Subject,Q_Description,Q_Reward1,Q_Reward2;
+
+var getParam = function(key){
+        var _parammap = {};
+        document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+            function decode(s) {
+                return decodeURIComponent(s.split("+").join(" "));
+            }
+
+            _parammap[decode(arguments[1])] = decode(arguments[2]);
+        });
+
+        return _parammap[key];
+    };
+
+Q_Subject=getParam("tbSubject");
+Q_Description=getParam("tbQuestDescription");
+Q_Reward1=getParam("tbReward1");
+Q_Reward2=getParam("tbReward2");
 
 function init(){
 
@@ -51,22 +70,36 @@ function main(){
   		ctx.drawImage(img1, 1, 1,500,650);
 
   		ctx.font="40px Hanna";
-  		ctx.fillText("어서일해라!", 150, 60);
+  		ctx.fillText(Q_Subject, 150, 60);
 
-  		ctx.font="28px Hanna";
-  		ctx.fillText("형광등 갈기!", 110, 110);
+			//Quest Description
+  		ctx.font="25px Hanna";
+			var maxWidth = 360;
+			var lineHeight = 30;
+			var x = (canvas.width - maxWidth) / 2;
+			var y = 100;
 
+ 			wrapText(ctx, Q_Description, x, y, maxWidth, lineHeight);
 
   		ctx.font="30px Hanna";
   		ctx.fillText("퀘스트 보상", 80, 450);
 
-  		ctx.drawImage(img2, 80, 460 ,50,50);
-  		ctx.font="23px Hanna";
-  		ctx.fillText("후줄근한 바지(추위내성 +10)", 140, 495);
+		  if(Q_Reward1 != "")
+			{
+				ctx.drawImage(img2, 80, 460 ,50,50);
+				ctx.font="23px Hanna";
+				ctx.fillText(Q_Reward1, 140, 495);
+			}
 
-  		ctx.drawImage(img3, 80, 518 ,50,50);
-  		ctx.font="23px Hanna";
-  		ctx.fillText("김빠진 맥주(추위내성 +40)", 140, 550);
+			if(Q_Reward2 != "")
+			{
+				ctx.drawImage(img3, 80, 518 ,50,50);
+				ctx.font="23px Hanna";
+				ctx.fillText(Q_Reward2, 140, 550);
+
+			}
+
+
 
     }
 }
@@ -81,6 +114,34 @@ function loadImage(src, onload) {
     return img;
 }
 
+function wrapText(context, text, x, y, maxWidth, lineHeight) {
+
+	var words = text.split(' ');
+	var line = '';
+
+	for(var n = 0; n < words.length; n++)
+	{
+
+	  var testLine = line + words[n] + ' ';
+	  var metrics = context.measureText(testLine);
+	  var testWidth = metrics.width;
+
+	  if (testWidth > maxWidth && n > 0)
+		{
+	    context.fillText(line, x +20, y);
+	    line = words[n] + ' ';
+	    y += lineHeight;
+	  }
+	  else
+		{
+	    line = testLine;
+	  }
+
+	}
+
+	context.fillText(line, x + 20, y);
+
+	}
 
  </script>
 	</body>
